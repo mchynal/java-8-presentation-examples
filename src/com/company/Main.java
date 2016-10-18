@@ -2,6 +2,7 @@ package com.company;
 
 import org.jooq.lambda.Seq;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -16,9 +17,18 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //TODO Runnable
+        //TODO Runnable printAbc
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("abc");
+            }
+        };
+        r.run();
+
         Runnable printAbc = () -> System.out.println("abc");
         printAbc.run();
+
 
         //TODO Consumer
         Consumer<String> print = str -> System.out.println(str);
@@ -88,7 +98,7 @@ public class Main {
         );
 
         System.out.println(
-                Seq.seq(list).groupBy(p -> p % 2 == 0 ? "even" : "odd", Collectors.summarizingInt(Integer::intValue))
+                Seq.seq(list).groupBy(p -> p % 2 == 0 ? "even" : "odd", Collectors.summingInt(Integer::intValue))
         );
 
         //TODO Optional
@@ -100,6 +110,7 @@ public class Main {
             System.out.println(0);
         }
 
+        //napis = "napis";
         System.out.println(
                 Optional.ofNullable(napis).orElse("").length()
         );
@@ -107,6 +118,30 @@ public class Main {
         //TODO first gt 10 | sout | ifPresent
         list.stream().filter(x -> x > 9).findFirst().ifPresent(System.out::println);
 
+
+        //TODO petle
+        String text = "kon 4 3 5\n" +
+                "pies 4 3 5\n" +
+                "kot 4 3 5";
+
+        List<String[]> matrix = Arrays.stream(text.split("\n"))
+                .map(String::trim)
+                .map(line -> line.split(" "))
+                .collect(Collectors.toList());
+
+        System.out.println(
+                matrix
+        );
+
+        System.out.println(
+                matrix.stream()
+                        .map(line -> line[2])
+                        .mapToInt(Integer::parseInt)
+                        .sum()
+        );
+
+        //TODO walidator
+        //https://gist.github.com/mchynal/b96dcab1c3ac71c66040629e0afdda98
 
         //TODO java8 vs jOOλ vs javaslang
         //https://gist.github.com/mchynal/6dc2e571d6fb37862d9001355b0e29a8
